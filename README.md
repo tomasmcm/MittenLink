@@ -4,6 +4,8 @@
   |  |  |    _|__|_  _   _  _     |        _  _   | |  
   |  |  |  |  |  |  |/  / |/ |   _|    |  / |/ |  |/_) 
   |  |  |_/|_/|_/|_/|__/  |  |_/(/\___/|_/  |  |_/| \_/
+
+ Protecting your cold wallet so you don't get burnt.
 ```
 
 Fully onchain verification and registry contract to store links between hot wallets and cold wallets.

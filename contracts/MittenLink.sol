@@ -26,20 +26,22 @@ contract MittenLink {
   /// 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF / (maxTransfer - minTransfer)
   uint256 constant internal multiplier = 1461501637330902918203684832716283019655932542975 / (maxTransfer - minTransfer);
 
-  function getTransferValue(address hotWallet)
-  external
-  pure
-  returns (uint256)
-  {
-    uint256 hotWalletValue = uint256(uint160(hotWallet));
-    return hotWalletValue / multiplier;
-  }
-
   /// @notice EIP-1559 type 2 header
   bytes constant internal HEADER = hex"02";
   address constant internal MAX = 0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF;
   address constant internal MIN = 0x0000000000000000000000000000000000000000;
 
+  /** -----------  WRITE ----------- */
+
+  /**
+  * @notice Verify and link a cold wallet to a hot wallet
+  * @param coldWallet The cold wallet where the transfer was sent from and will be used as value in the registry
+  * @param hotWallet The hot wallet that received the transfer and will be used as key in the registry
+  * @param rpl Transaction data encoded as RPL
+  * @param v ECDSA signature v param
+  * @param r ECDSA signature r param
+  * @param s ECDSA signature s param
+  */
   function linkWallets(
     address coldWallet,
     address hotWallet,
@@ -74,6 +76,27 @@ contract MittenLink {
     walletLinks[rplTo].add(rplFrom);
   }
 
+  /** -----------  READ ----------- */
+
+  /**
+  * @notice Returns the value that needs to be transfered to the hot wallet for verification
+  * @param hotWallet The address of the hot wallet that will receive the transfer
+  * @return uint256 Value for the transfer in wei
+  */
+  function getTransferValue(address hotWallet)
+  external
+  pure
+  returns (uint256)
+  {
+    uint256 hotWalletValue = uint256(uint160(hotWallet));
+    return hotWalletValue / multiplier;
+  }
+
+  /**
+  * @notice Returns an array of cold wallets linked to a hot wallet
+  * @param hotWallet The address of the hot wallet
+  * @return addresses Array of cold wallets linked to a hot wallet
+  */
   function getWalletLinks(address hotWallet)
   external
   view
