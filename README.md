@@ -6,7 +6,7 @@
   |  |  |_/|_/|_/|_/|__/  |  |_/(/\___/|_/  |  |_/| \_/
 ```
 
-Fully onchain registry contract to store links between hot wallets and cold wallets.
+Fully onchain verification and registry contract to store links between hot wallets and cold wallets.
 
 The cold wallet never has to connect to any contract, the only requirement is to make a transfer with a specific value from the cold wallet to the hot wallet.
 
