@@ -12,6 +12,7 @@ Fully onchain verification and registry contract to store links between hot wall
 
 The cold wallet never has to connect to any contract, the only requirement is to make a transfer with a specific value from the cold wallet to the hot wallet.
 
+ps: This is a proof of concept, it was not deployed or tested in a production environment yet.
 
 # Process
 
@@ -38,3 +39,8 @@ There are a couple of existing solutions that allow linking a cold wallet to a h
 # How is this different?
 
 This method allows using the signature of a transfer transaction (EIP-1559 type 2) to prove ownership of a wallet. By sending the RPL hash and v, r, s signature values to the contract we can ensure that the transaction data is correct (if any of the values is tampered the resulting public address will be different from the one provided).
+
+# Ideas for improvements
+
+Instead of storing the hotWallet<>coldWallets mapping in the contract state which could be tampered or lost when deploying a new contract, this contract could issue a Soulbound NFT containing the cold wallet address, and the verifiable data from the transaction (hash, v, r, s). This way, any project that would like to use MittenLink can simply fetch the hot wallet NFTs and `ecrecover(keccak256(hash, v, r, s))` to verify the cold wallet address.
+
