@@ -8,7 +8,7 @@
 
 Fully onchain registry contract to store links between hot wallets and cold wallets.
 
-Cold wallet never has to connect to any contract, the only requirement is to make a transfer with a specific value from the cold wallet to the hot wallet.
+The cold wallet never has to connect to any contract, the only requirement is to make a transfer with a specific value from the cold wallet to the hot wallet.
 
 
 # Process
@@ -26,7 +26,7 @@ Cold wallet never has to connect to any contract, the only requirement is to mak
 
 There are a couple of existing solutions that allow linking a cold wallet to a hot wallet. Most of them rely on a signature from the cold wallet to prove ownership. Others require connecting the cold wallet to the contract and calling a method. And there are also offchain solutions that handle the verification elsewhere and store approved addresses on the contract.
 
-## Problems
+## Problems of existing solutions
 
 - Producing a signature requires technical knowledge that most people don't have.
 - Connecting the cold wallet to a contract requires knowing / trusting the contract will not perform unwanted operations.
