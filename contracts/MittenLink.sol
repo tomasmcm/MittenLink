@@ -37,7 +37,7 @@ contract MittenLink {
   * @notice Verify and link a cold wallet to a hot wallet
   * @param coldWallet The cold wallet where the transfer was sent from and will be used as value in the registry
   * @param hotWallet The hot wallet that received the transfer and will be used as key in the registry
-  * @param rpl Transaction data encoded as RPL
+  * @param rlp Transaction data encoded as RLP
   * @param v ECDSA signature v param
   * @param r ECDSA signature r param
   * @param s ECDSA signature s param
@@ -45,7 +45,7 @@ contract MittenLink {
   function linkWallets(
     address coldWallet,
     address hotWallet,
-    bytes memory rpl,
+    bytes memory rlp,
     uint8 v,
     bytes32 r,
     bytes32 s
@@ -60,20 +60,20 @@ contract MittenLink {
       "coldWallet and hotWallet need to be different"
     );
 
-    RLPReader.RLPItem[] memory ls = rpl.toRlpItem().toList();
+    RLPReader.RLPItem[] memory ls = rlp.toRlpItem().toList();
 
-    address rplFrom = ecrecover(keccak256(bytes.concat(HEADER, rpl)), v, r, s);
-    require(rplFrom == coldWallet, "Signature does not match coldWallet");
+    address rlpFrom = ecrecover(keccak256(bytes.concat(HEADER, rlp)), v, r, s);
+    require(rlpFrom == coldWallet, "Signature does not match coldWallet");
 
-    address rplTo = ls[5].toAddress();
-    require (rplTo == hotWallet, "Signature does not match hotWallet");
+    address rlpTo = ls[5].toAddress();
+    require (rlpTo == hotWallet, "Signature does not match hotWallet");
 
-    uint256 rplValue = ls[6].toUint();
-    require (rplValue == this.getTransferValue(rplTo), "Value does not match required");
+    uint256 rlpValue = ls[6].toUint();
+    require (rlpValue == this.getTransferValue(rlpTo), "Value does not match required");
 
-    require (!walletLinks[rplTo].contains(rplFrom), "Wallet link already saved");
+    require (!walletLinks[rlpTo].contains(rlpFrom), "Wallet link already saved");
 
-    walletLinks[rplTo].add(rplFrom);
+    walletLinks[rlpTo].add(rlpFrom);
   }
 
   /** -----------  READ ----------- */
