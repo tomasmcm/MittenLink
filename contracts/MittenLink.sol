@@ -81,7 +81,7 @@ contract MittenLink {
 	/**
 	* @notice Returns the value that needs to be transfered to the hot wallet for verification
 	* @param hotWallet The address of the hot wallet that will receive the transfer
-	* @return uint256 Value for the transfer in wei
+	* @return uint256 Value for the transfer in wei rounded to 1e10
 	*/
 	function getTransferValue(address hotWallet)
 	external
@@ -89,7 +89,7 @@ contract MittenLink {
 	returns (uint256)
 	{
 		uint256 hotWalletValue = uint256(uint160(hotWallet));
-		return hotWalletValue / multiplier;
+		return ((hotWalletValue / multiplier) + minTransfer) / 10000000000 * 10000000000;
 	}
 
 	/**
