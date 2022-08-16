@@ -44,3 +44,8 @@ This method allows using the signature of a transfer transaction (EIP-1559 type 
 
 Instead of storing the hotWallet<>coldWallets mapping in the contract state which could be tampered or lost when deploying a new contract, this contract could issue a Soulbound NFT containing the cold wallet address, and the verifiable data from the transaction (hash, v, r, s). This way, any project that would like to use MittenLink can simply fetch the hot wallet NFTs and `ecrecover(keccak256(hash, v, r, s))` to verify the cold wallet address.
 
+# Related projects
+
+- @wenew [HotWalletProxy](https://github.com/wenewlabs/public/blob/main/HotWalletProxy/HotWalletProxy.sol)
+- @treemaru [TreeLogin](https://etherscan.io/address/0xD5aD600cAdf6dcDF63dEC463771b66E31c1C7aEB#code#F1#L1)
+- @0xfoobar [DelegationRegistry](https://github.com/0xfoobar/nft-delegation/blob/main/src/DelegationRegistry.sol)
