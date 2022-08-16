@@ -20,7 +20,7 @@ ps: This is a proof of concept, it was not deployed or tested in a production en
 
 2. (Cold Wallet) User transfers the value from the cold wallet to the hot wallet.
 
-3. (Hot Wallet) User calls `linkWallets` with the cold and hot wallet addresses, rlp hash and v, r, s signature values from the transfer transaction.
+3. (Hot Wallet) User calls `linkWallets` with the cold and hot wallet addresses, serialised transaction hash and v, r, s signature values from the transfer transaction.
 
 4. (Hot Wallet) User calls `getWalletLinks` with the hot wallet address and receives array of cold wallets linked to it.
 
@@ -38,7 +38,7 @@ There are a couple of existing solutions that allow linking a cold wallet to a h
 
 # How is this different?
 
-This method allows using the signature of a transfer transaction (EIP-1559 type 2) to prove ownership of a wallet. By sending the RLP hash and v, r, s signature values to the contract we can ensure that the transaction data is correct (if any of the values is tampered the resulting public address will be different from the one provided).
+This method allows using the signature of a transfer transaction (EIP-1559 type 2) to prove ownership of a wallet. By sending the serialised transaction hash and v, r, s signature values to the contract we can ensure that the transaction data is correct (if any of the values is tampered the resulting public address will be different from the one provided).
 
 # Ideas for improvements
 
