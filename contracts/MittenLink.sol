@@ -37,7 +37,7 @@ contract MittenLink {
 	* @notice Verify and link a cold wallet to a hot wallet
 	* @param coldWallet The cold wallet where the transfer was sent from and will be used as value in the registry
 	* @param hotWallet The hot wallet that received the transfer and will be used as key in the registry
-	* @param rlp Transaction data encoded as RLP
+	* @param rawHash Raw transaction data
 	* @param v ECDSA signature v param
 	* @param r ECDSA signature r param
 	* @param s ECDSA signature s param
@@ -45,7 +45,7 @@ contract MittenLink {
 	function linkWallets(
 		address coldWallet,
 		address hotWallet,
-		bytes memory rlp,
+		bytes calldata rawHash,
 		uint8 v,
 		bytes32 r,
 		bytes32 s
@@ -60,9 +60,9 @@ contract MittenLink {
 			"coldWallet and hotWallet need to be different"
 		);
 
-		RLPReader.RLPItem[] memory ls = rlp.toRlpItem().toList();
+		RLPReader.RLPItem[] memory ls = hashToRLP(rawHash).toRlpItem().toList();
 
-		address rlpFrom = ecrecover(keccak256(bytes.concat(HEADER, rlp)), v, r, s);
+		address rlpFrom = ecrecover(keccak256(rawHash), v, r, s);
 		require(rlpFrom == coldWallet, "Signature does not match coldWallet");
 
 		address rlpTo = ls[5].toAddress();
@@ -104,14 +104,20 @@ contract MittenLink {
 		return walletLinks[hotWallet].values();
 	}
 
+	/** -----------  PRIVATE ----------- */
 
-	function logit(bytes hash) private returns (bytes rlp){
-		rlp = new bytes(hash.length - 2);
-		rlp[0] = hash[0]
-		rlp[1] = hash[1]
-		// skip 2 and 3
-		for (uint i = 4; i < dahashta.length; i++) {
-			rlp[i - 2] = hash[i];
+	/**
+	* @notice Returns rlp hash from raw transaction hash
+	* @param hash The raw hash with the transaction data
+	* @return rlp Hash encoded with RLP
+	*/
+	function hashToRLP(bytes calldata hash)
+	private
+	pure
+	returns (bytes memory rlp){
+		rlp = new bytes(hash.length - 1);
+		for (uint i = 1; i < hash.length; i++) {
+			rlp[i - 1] = hash[i];
 		}
-  }
+	}
 }
