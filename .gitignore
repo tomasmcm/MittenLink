@@ -1,3 +1,8 @@
-out/
+out/*
+!out/MittenLink.sol
+out/MittenLink.sol/*
+!out/MittenLink.sol/MittenLink.metadata.json
 cache/
 .DS_Store
+node_modules/
+.env

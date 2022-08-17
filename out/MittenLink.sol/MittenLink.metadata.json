@@ -1,0 +1,209 @@
+{
+  "compiler": {
+    "version": "0.8.16+commit.07a7930e"
+  },
+  "language": "Solidity",
+  "output": {
+    "abi": [
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "hotWallet",
+            "type": "address"
+          }
+        ],
+        "name": "getTransferValue",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "hotWallet",
+            "type": "address"
+          }
+        ],
+        "name": "getWalletLinks",
+        "outputs": [
+          {
+            "internalType": "address[]",
+            "name": "",
+            "type": "address[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "coldWallet",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "hotWallet",
+            "type": "address"
+          },
+          {
+            "internalType": "bytes",
+            "name": "rawHash",
+            "type": "bytes"
+          },
+          {
+            "internalType": "uint8",
+            "name": "v",
+            "type": "uint8"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "r",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "s",
+            "type": "bytes32"
+          }
+        ],
+        "name": "linkWallets",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "coldWallet",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "hotWallet",
+            "type": "address"
+          }
+        ],
+        "name": "removeLink",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    "devdoc": {
+      "author": "tomasmcm",
+      "details": "currently only supports EIP-1559 type 2 transfer transactions",
+      "kind": "dev",
+      "methods": {
+        "getTransferValue(address)": {
+          "params": {
+            "hotWallet": "The address of the hot wallet that will receive the transfer"
+          },
+          "returns": {
+            "_0": "uint256 Value for the transfer in wei rounded to 1e10"
+          }
+        },
+        "getWalletLinks(address)": {
+          "params": {
+            "hotWallet": "The address of the hot wallet"
+          },
+          "returns": {
+            "_0": "addresses Array of cold wallets linked to a hot wallet"
+          }
+        },
+        "linkWallets(address,address,bytes,uint8,bytes32,bytes32)": {
+          "params": {
+            "coldWallet": "The cold wallet where the transfer was sent from and will be used as value in the registry",
+            "hotWallet": "The hot wallet that received the transfer and will be used as key in the registry",
+            "r": "ECDSA signature r param",
+            "rawHash": "Raw transaction data",
+            "s": "ECDSA signature s param",
+            "v": "ECDSA signature v param"
+          }
+        },
+        "removeLink(address,address)": {
+          "params": {
+            "coldWallet": "The cold wallet address",
+            "hotWallet": "The hot wallet address"
+          }
+        }
+      },
+      "title": "A registry contract to store links between hot wallets and cold wallets",
+      "version": 1
+    },
+    "userdoc": {
+      "kind": "user",
+      "methods": {
+        "getTransferValue(address)": {
+          "notice": "Returns the value that needs to be transfered to the hot wallet for verification"
+        },
+        "getWalletLinks(address)": {
+          "notice": "Returns an array of cold wallets linked to a hot wallet"
+        },
+        "linkWallets(address,address,bytes,uint8,bytes32,bytes32)": {
+          "notice": "Verify and link a cold wallet to a hot wallet"
+        },
+        "removeLink(address,address)": {
+          "notice": "Remove link from a cold wallet to a hot wallet"
+        }
+      },
+      "version": 1
+    }
+  },
+  "settings": {
+    "compilationTarget": {
+      "src/MittenLink.sol": "MittenLink"
+    },
+    "evmVersion": "london",
+    "libraries": {},
+    "metadata": {
+      "bytecodeHash": "ipfs"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "remappings": [
+      ":ds-test/=lib/forge-std/lib/ds-test/src/",
+      ":forge-std/=lib/forge-std/src/",
+      ":openzeppelin-contracts/=lib/openzeppelin-contracts/"
+    ]
+  },
+  "sources": {
+    "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol": {
+      "keccak256": "0x5050943b32b6a8f282573d166b2e9d87ab7eb4dbba4ab6acf36ecb54fe6995e4",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://d4831d777a29ebdf9f2caecd70e74b97bff1b70e53622fd0a02aed01e21c8271",
+        "dweb:/ipfs/QmUqurVVnCc7XkMxb2k23TVQUtuhHZduJ3hTZarTJrqU24"
+      ]
+    },
+    "src/MittenLink.sol": {
+      "keccak256": "0x5e2c421f96ee810914af2630d045c0373d1f48616e36de2cb915746416c45b9e",
+      "license": "GPL-3.0",
+      "urls": [
+        "bzz-raw://40294471f74ff9d28295eae759f4c2febcf7432e618b37d4f84720ac8ce19ea7",
+        "dweb:/ipfs/QmeCmVyqXV5SuW2qt9vWBdT991S1E2cQugvMFFhBx3xzRD"
+      ]
+    },
+    "src/RLPReader.sol": {
+      "keccak256": "0xa42dfd80a2956d305ae2efd2862dd8e1fa0af91eb5ec27f5528821f9510bc0f6",
+      "license": "Apache-2.0",
+      "urls": [
+        "bzz-raw://6f6d13f3ec80f95bc30f55988c37ef2012b5e58e3f8fc877400695fb5d1566f1",
+        "dweb:/ipfs/Qmf3A4PwaYXgfBqxutEjhurBYihexvEjFDcmrfaE17BQWF"
+      ]
+    }
+  },
+  "version": 1
+}
