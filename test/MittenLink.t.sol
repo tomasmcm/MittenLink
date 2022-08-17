@@ -52,10 +52,14 @@ contract MittenLinkTest is Test {
     }
 
     function testLinkWallets () public {
-        vm.prank(0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567);
+        address hotWallet = 0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567;
+        address coldWallet = 0x890EaCEB4eE2e893f9155Ddf45887885Ba7963f5;
+
+        vm.prank(hotWallet);
+        // Data from transaction 0x930c973b3ef52649d457d6dcdec62ed9697d483a49bde2845d2e82c3fc94f953 (Rinkeby)
         try mittenLinkToTest.linkWallets(
-            0x890EaCEB4eE2e893f9155Ddf45887885Ba7963f5,
-            0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567,
+            coldWallet,
+            hotWallet,
             hex"02ed0403848da68320848da6833a825208942e5deb91b444efbea95e34bfb9aa043a5f99f5678656156ba0c40080c0",
             27,
             0x45fef98df3f09150c788ad8ac6cf04ade04c6666d45fc77617d9cf68e5808f33,
@@ -68,19 +72,19 @@ contract MittenLinkTest is Test {
             assertTrue(false, "failed unexpected");
         }
 
-        address[] memory walletLinks = mittenLinkToTest.getWalletLinks(0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567);
+        address[] memory walletLinks = mittenLinkToTest.getWalletLinks(hotWallet);
 
         assertEq(walletLinks.length, 1, "Wallet links should have 1 address exactly");
 
-        assertEq(walletLinks[0], 0x890EaCEB4eE2e893f9155Ddf45887885Ba7963f5, "Wallet link does not match expected address");
+        assertEq(walletLinks[0], coldWallet, "Wallet link does not match expected address");
 
-        vm.prank(0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567);
+        vm.prank(hotWallet);
         mittenLinkToTest.removeLink(
-            0x890EaCEB4eE2e893f9155Ddf45887885Ba7963f5,
-            0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567
+            coldWallet,
+            hotWallet
         );
 
-        address[] memory walletLinks2 = mittenLinkToTest.getWalletLinks(0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567);
+        address[] memory walletLinks2 = mittenLinkToTest.getWalletLinks(hotWallet);
 
         assertEq(walletLinks2.length, 0, "Wallet links should be empty");
     }
