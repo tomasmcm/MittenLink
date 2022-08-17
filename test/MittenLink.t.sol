@@ -52,6 +52,7 @@ contract MittenLinkTest is Test {
     }
 
     function testLinkWallets () public {
+        vm.prank(0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567);
         try mittenLinkToTest.linkWallets(
             0x890EaCEB4eE2e893f9155Ddf45887885Ba7963f5,
             0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567,
@@ -72,5 +73,15 @@ contract MittenLinkTest is Test {
         assertEq(walletLinks.length, 1, "Wallet links should have 1 address exactly");
 
         assertEq(walletLinks[0], 0x890EaCEB4eE2e893f9155Ddf45887885Ba7963f5, "Wallet link does not match expected address");
+
+        vm.prank(0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567);
+        mittenLinkToTest.removeLink(
+            0x890EaCEB4eE2e893f9155Ddf45887885Ba7963f5,
+            0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567
+        );
+
+        address[] memory walletLinks2 = mittenLinkToTest.getWalletLinks(0x2E5deB91b444EfbeA95E34BFb9aA043A5F99f567);
+
+        assertEq(walletLinks2.length, 0, "Wallet links should be empty");
     }
 }

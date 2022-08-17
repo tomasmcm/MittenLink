@@ -53,6 +53,7 @@ contract MittenLink {
 	)
 	external {
 		require(
+			msg.sender == hotWallet &&
 			coldWallet != hotWallet &&
 			coldWallet != MAX &&
 			hotWallet != MAX &&
@@ -75,6 +76,26 @@ contract MittenLink {
 		require (!walletLinks[rlpTo].contains(rlpFrom), "Wallet link already saved");
 
 		walletLinks[rlpTo].add(rlpFrom);
+	}
+
+	/**
+	* @notice Remove link from a cold wallet to a hot wallet
+	* @param coldWallet The cold wallet address
+	* @param hotWallet The hot wallet address
+	*/
+	function removeLink(
+		address coldWallet,
+		address hotWallet
+	)
+	external {
+		require(
+			msg.sender == hotWallet,
+			"function needs to be called by hotWallet"
+		);
+
+		require (walletLinks[hotWallet].contains(coldWallet), "Wallet link does not exist");
+
+		walletLinks[hotWallet].remove(coldWallet);
 	}
 
 	/** -----------  READ ----------- */
