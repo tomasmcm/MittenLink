@@ -1,0 +1,11 @@
+{
+  "name": "mittenlink",
+  "version": "1.0.0",
+  "repository": "https://github.com/tomasmcm/MittenLink.git",
+  "author": "tomasmcm <tomasmcm@whitesmith.co>",
+  "license": "GPL-3.0",
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test"
+  }
+}
